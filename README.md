@@ -44,3 +44,55 @@ grille.chemin(6, 4) # retourne la liste des id ou des cases ente la case 6 et 4
 grille.display() # affiche la grille
 print(grille) # affighe egalement al grille
 ```
+
+L'affichage d'une grille en mode console ressemblera à :
+```
+    A   B   C   D   E   F
+      G   H   I   J   K
+    L   M   N   O   P   Q
+```
+
+# Initialisation de la grille
+Je viens à me poser plusieurs questions : 
+* Comment initialiser une grille, si possible facilement ?
+* Comment enregistrer mes données de grille ?
+
+Il serait possible d'enregistrer les données sous la forme d'un tableau. L'exemple ci-dessus pourrait être enregistré sous la forme:
+```
+[[A,B,C,D,E,F],
+ [G,H,I,J,K],
+ [L,M,N,O,P,Q]]
+```
+Avec cette solution, les lignes sont en quinconces. Une solution equivalente serait d'enregitrer le parallélogramme contenant la grille avec des None pour compléter. Cela permettrer en plus, de ficiliter la lecture des voisins.
+
+Pour des raisons pédagogiques, la structure qui sera utilisée sera une structure de graphe simple (non pondéré, non-orienté). Cependant, la structure de tableau pourra être utiliser pour créer et afficher une grille rapdement. Je vais donc créer des foncitonde "conversion".
+
+Une grille contiendra ``_data`` un dictionnaire d'``HexaCell`` qui sera l'objet utilisé pour représentrer une case hexagonale. La clef du dictionnaire sera l'ID de la case.
+Une ``HexaCell`` se définie par:
+* un ID définie à la création
+* une valeur
+* un dictionnaire avec les cases voisines. La clé du dictionnaire indiquera la direction:
+  * 0 : TOP_LEFT
+  * 1 : LEFT
+  * 2 : BOTTOM_LEFT
+  * 3 : BOTTOM_RIGHT
+  * 4 : RIGHT 
+  * 5 : TOP_RIGHT
+
+```
+   5       0
+4    case     1
+   3       2
+```
+
+*Remarque* : On peut imaginer la possibilité en créant une case de présiser une case voisine dans une certaine direction. Dans ce cas, il faudra prévoir la mise à jour des case adjacentes, ainsi que des exceptions dans le cas ou une cellule est déjà présente dans cette direction ou autre incohérence.
+
+Le projet est maintenant suffisement défini pour passer à la programmation des fonctionnalités principales.
+Je vais créer les fichiers python suivants:
+* **HexaCell.py** : fichier définisant la classe représentant une case
+* **HexaGrid.py** : fichier définisant la classe représentant une grille
+* **test.py** : fichier pour tester les fonctionnalités des classes au fur et à mesure.
+* **tools.py** : Fichier avec les fonctions classiques pour aider à développer.
+
+# Observation pendant le développement
+Au moment de la creation des cases, et surtout de la définition des cases voisines et du maintient de la cohérence, un problème se pose. D'intuition, il semble possible de faire un algorithme récursif, mais il est facile de truver des cases complexes qui serai gérer simplement avec une structure en tableau. Cette solution reste donc envisageable.
